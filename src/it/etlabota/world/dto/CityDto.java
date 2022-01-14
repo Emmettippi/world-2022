@@ -1,6 +1,10 @@
 package it.etlabota.world.dto;
 
 public class CityDto {
+	public CityDto() {
+		
+	}
+	
 	private Long id;
 	private String nome;
 	private Long population;
