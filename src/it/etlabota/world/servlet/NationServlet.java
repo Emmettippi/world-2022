@@ -29,6 +29,7 @@ public class NationServlet extends HttpServlet {
 		if (id == null) {
 			List<NationDto> nations = nationService.getAll();
 			req.setAttribute("nations", nations);
+			req.getRequestDispatcher("jsp/nations.jsp").forward(req, resp);
 		} else {
 			NationDto dto = nationService.getOne(id);
 			req.setAttribute("nation", dto);

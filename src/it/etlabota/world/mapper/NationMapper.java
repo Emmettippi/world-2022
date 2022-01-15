@@ -9,7 +9,7 @@ import it.etlabota.world.model.Nation;
 
 public class NationMapper {
 
-	private CityMapper cityMapper = new CityMapper();
+	private static CityMapper cityMapper = new CityMapper();
 
 	public NationDto toDto(Nation nation) {
 		return toDto(nation, null);
