@@ -14,12 +14,14 @@
 			<th>ID</th>
 			<th>CODICE</th>
 			<th>NOME</th>
+			<th>DETTAGLIO</th>
 		</tr>
 		<c:forEach items="${nations}" var="nation">
 			<tr>
 				<td>${nation.id}</td>
 				<td>${nation.codice}</td>
 				<td>${nation.nome}</td>
+				<td><a href="./?id=${nation.id}">Vai al dettaglio</a></td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -33,6 +33,7 @@ public class NationServlet extends HttpServlet {
 		} else {
 			NationDto dto = nationService.getOne(id);
 			req.setAttribute("nation", dto);
+			req.getRequestDispatcher("jsp/nation.jsp").forward(req, resp);
 		}
 	}
 
