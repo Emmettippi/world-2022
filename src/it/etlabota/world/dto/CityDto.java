@@ -1,8 +1,7 @@
+
 package it.etlabota.world.dto;
 
 public class CityDto {
-
-	// Commento test 2
 
 	public CityDto() {
 
