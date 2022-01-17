@@ -2,10 +2,12 @@ package it.etlabota.world.dto;
 
 public class CityDto {
 
+	// Commento test 2
+
 	public CityDto() {
-		
+
 	}
-	
+
 	private Long id;
 	private String nome;
 	private Long population;
