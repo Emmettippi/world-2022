@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import it.etlabota.world.dto.NationDto;
 import it.etlabota.world.service.NationService;
@@ -18,6 +19,10 @@ public class NationServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		System.out.println("Vecchio metodo: " + session.getAttribute("METHOD"));
+		session.setAttribute("METHOD", "GET");
+
 		String idStr = req.getParameter("id");
 		Long id = null;
 		try {
@@ -39,6 +44,10 @@ public class NationServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		System.out.println("Vecchio metodo: " + session.getAttribute("METHOD"));
+		session.setAttribute("METHOD", "POST");
+
 		NationDto nationDto = new NationDto();
 		String idStr = req.getParameter("id");
 		nationDto.setCodice(req.getParameter("codice"));

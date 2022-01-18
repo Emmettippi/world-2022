@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Mondo</title>
+<title>Mondo ${METHOD}</title>
 </head>
 <body>
 	<h1>Lista Nazioni</h1>

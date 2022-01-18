@@ -36,8 +36,8 @@ public class NationServiceImpl implements NationService {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, entity.getCodice());
 			statement.setString(2, entity.getNome());
-			statement.setLong(3, entity.getPopulation()); // DOES NOT ACCEPTS NULL
-			statement.setObject(4, entity.getIdCapital(), MysqlType.BIGINT); // DOES ACCEPTS NULL
+			statement.setLong(3, entity.getPopulation()); // DOES NOT ACCEPT NULL
+			statement.setObject(4, entity.getIdCapital(), MysqlType.BIGINT); // DOES ACCEPT NULL
 			statement.setObject(5, entity.getArea(), MysqlType.DOUBLE);
 			statement.setObject(6, entity.getGovernmentType(), MysqlType.VARCHAR);
 			statement.setObject(7, entity.getMiddleAge(), MysqlType.FIELD_TYPE_SHORT);
@@ -83,8 +83,8 @@ public class NationServiceImpl implements NationService {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, entity.getCodice());
 			statement.setString(2, entity.getNome());
-			statement.setLong(3, entity.getPopulation()); // DOES NOT ACCEPTS NULL
-			statement.setObject(4, entity.getIdCapital(), MysqlType.BIGINT); // DOES ACCEPTS NULL
+			statement.setLong(3, entity.getPopulation()); // DOES NOT ACCEPT NULL
+			statement.setObject(4, entity.getIdCapital(), MysqlType.BIGINT); // DOES ACCEPT NULL
 			statement.setObject(5, entity.getArea(), MysqlType.DOUBLE);
 			statement.setObject(6, entity.getGovernmentType(), MysqlType.VARCHAR);
 			statement.setObject(7, entity.getMiddleAge(), MysqlType.FIELD_TYPE_SHORT);
