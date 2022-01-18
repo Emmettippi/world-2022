@@ -14,7 +14,7 @@
 			<th>ID</th>
 			<th>CODICE</th>
 			<th>NOME</th>
-			<th>DETTAGLIO</th>
+			<th><a href="./?id=0">Crea nuovo</a></th>
 		</tr>
 		<c:forEach items="${nations}" var="nation">
 			<tr>

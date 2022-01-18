@@ -16,8 +16,14 @@ public interface NationService {
 	 */
 	public NationDto update(NationDto dto);
 
+	/**
+	 * Id must not be null
+	 */
 	public NationDto getOne(Long id);
 
+	/**
+	 * Id must not be null
+	 */
 	public void delete(Long id);
 
 	public List<NationDto> getAll();

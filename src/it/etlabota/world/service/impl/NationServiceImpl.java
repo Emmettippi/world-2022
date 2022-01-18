@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.cj.MysqlType;
+
 import it.etlabota.world.dto.NationDto;
 import it.etlabota.world.mapper.NationMapper;
 import it.etlabota.world.model.Nation;
@@ -18,18 +20,103 @@ public class NationServiceImpl implements NationService {
 
 	@Override
 	public NationDto create(NationDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (dto == null) {
+			return null;
+		}
+		if (dto.getId() != null) {
+			return this.update(dto);
+		}
+		NationDto savedDto = null;
+		try {
+			Connection conn = DbConnection.getConnection();
+			Nation entity = nationMapper.toModel(dto);
+			String sql = "INSERT INTO nation \n" +
+				"(codice, nome, population, id_capitale, superficie, government_type, middle_age, path_flag) \n" +
+				"VALUES(?, ?, ?, ?, ?, ?, ?, ?) \n";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, entity.getCodice());
+			statement.setString(2, entity.getNome());
+			statement.setLong(3, entity.getPopulation()); // DOES NOT ACCEPTS NULL
+			statement.setObject(4, entity.getIdCapital(), MysqlType.BIGINT); // DOES ACCEPTS NULL
+			statement.setObject(5, entity.getArea(), MysqlType.DOUBLE);
+			statement.setObject(6, entity.getGovernmentType(), MysqlType.VARCHAR);
+			statement.setObject(7, entity.getMiddleAge(), MysqlType.FIELD_TYPE_SHORT);
+			statement.setObject(8, entity.getPathFlag(), MysqlType.VARCHAR);
+			//			statement.setObject(4, entity.getIdCapital(), MysqlType.BIGINT);
+			//			statement.setObject(5, entity.getArea(), MysqlType.DOUBLE);
+			//			statement.setObject(6, entity.getGovernmentType(), MysqlType.VARCHAR);
+			//			statement.setObject(7, entity.getMiddleAge(), MysqlType.FIELD_TYPE_SHORT);
+			//			statement.setObject(8, entity.getPathFlag(), MysqlType.VARCHAR);
+
+			statement.executeUpdate();
+
+			String sql2 = "SELECT MAX(id) FROM nation";
+			PreparedStatement statement2 = conn.prepareStatement(sql2);
+			ResultSet rs = statement2.executeQuery();
+			rs.next();
+			Long id = rs.getLong(1);
+			conn.close();
+
+			savedDto = this.getOne(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return savedDto;
 	}
 
 	@Override
 	public NationDto update(NationDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (dto == null) {
+			return null;
+		}
+		if (dto.getId() == null) {
+			return this.create(dto);
+		}
+		NationDto savedDto = null;
+		try {
+			Connection conn = DbConnection.getConnection();
+			Nation entity = nationMapper.toModel(dto);
+			String sql = "UPDATE nation \n"
+				+ "SET codice=?, nome=?, population=?, id_capitale=?, superficie=?, government_type=?"
+				+ ", middle_age=?, path_flag=? \n"
+				+ "WHERE id=? \n";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, entity.getCodice());
+			statement.setString(2, entity.getNome());
+			statement.setLong(3, entity.getPopulation()); // DOES NOT ACCEPTS NULL
+			statement.setObject(4, entity.getIdCapital(), MysqlType.BIGINT); // DOES ACCEPTS NULL
+			statement.setObject(5, entity.getArea(), MysqlType.DOUBLE);
+			statement.setObject(6, entity.getGovernmentType(), MysqlType.VARCHAR);
+			statement.setObject(7, entity.getMiddleAge(), MysqlType.FIELD_TYPE_SHORT);
+			statement.setObject(8, entity.getPathFlag(), MysqlType.VARCHAR);
+			statement.setLong(9, entity.getId());
+			//			statement.setLong(4, entity.getIdCapital());
+			//			statement.setDouble(5, entity.getArea());
+			//			statement.setString(6, entity.getGovernmentType());
+			//			statement.setShort(7, entity.getMiddleAge());
+			//			statement.setString(8, entity.getPathFlag());
+			//			statement.setLong(9, entity.getId());
+
+			int updated = statement.executeUpdate();
+			if (updated != 1) {
+				throw new Exception("Entity has been deleted");
+			}
+
+			conn.close();
+
+			savedDto = this.getOne(entity.getId());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return savedDto;
 	}
 
 	@Override
 	public NationDto getOne(Long id) {
+		if (id == null) {
+			return null;
+		}
 		NationDto dto = null;
 
 		try {
@@ -47,6 +134,7 @@ public class NationServiceImpl implements NationService {
 			nation.setId(rs.getLong("id"));
 			nation.setCodice(rs.getString("codice"));
 			nation.setNome(rs.getString("nome"));
+			nation.setPopulation(rs.getLong("population"));
 			dto = nationMapper.toDto(nation);
 			// }
 

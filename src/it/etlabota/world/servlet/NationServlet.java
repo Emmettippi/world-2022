@@ -39,6 +39,33 @@ public class NationServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		NationDto nationDto = new NationDto();
+		String idStr = req.getParameter("id");
+		nationDto.setCodice(req.getParameter("codice"));
+		nationDto.setNome(req.getParameter("nome"));
+		String populationStr = req.getParameter("population");
+
+		try {
+			nationDto.setId(Long.parseLong(idStr));
+		} catch (Exception e) {
+			System.out.println("No id: new nation");
+		}
+		try {
+			nationDto.setPopulation(Long.parseLong(populationStr));
+		} catch (Exception e) {
+			System.out.println("No population");
+			req.setAttribute("nation", nationDto);
+			req.getRequestDispatcher("jsp/nation.jsp").forward(req, resp);
+			return;
+		}
+		NationDto dto = null;
+		if (nationDto.getId() == null) {
+			dto = nationService.create(nationDto);
+		} else {
+			dto = nationService.update(nationDto);
+		}
+
+		req.setAttribute("nation", dto);
+		req.getRequestDispatcher("jsp/nation.jsp").forward(req, resp);
 	}
 }
